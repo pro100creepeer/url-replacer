@@ -17,12 +17,11 @@ fs.writeFileSync(
     let fn = $1.split('/');
     fn     = fn[fn.length - 1];
     download($1, fn);
-    if(verbose) console.log('Replaced' + $1 + ' -> ' + '/views/images/styles/' + fn);
+    if(verbose) console.log('Replaced ' + $1 + ' -> ' + '/views/images/styles/' + fn);
     return 'url(/views/images/styles/' + fn + ');';
   }));
 
 function download(finame, foname) {
-  child_process.exec('curl ' + finame, (e, sin) => {
-    fs.writeFileSync(foname, sin);
-  })
+  child_process.exec('rm -rf images/*')
+  child_process.exec('wget -P images ' + finame)
 }
